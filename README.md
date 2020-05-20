@@ -1,4 +1,6 @@
 ## community项目是一个致力于打造IT论坛的项目
+
+*该项目在持续更新中，suggestions直接联系author-email：`1914284378@qq.com`*
 ---
 - 项目主要基于Spring Boot框架搭建实现
 - 具体的实现细节在不断的更新中
