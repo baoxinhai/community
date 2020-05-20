@@ -1,5 +1,6 @@
 package com.baoxinhai.community.controller;
 
+import com.baoxinhai.community.dto.PaginationDTO;
 import com.baoxinhai.community.dto.QuestionDTO;
 import com.baoxinhai.community.mapper.QuestionMapper;
 import com.baoxinhai.community.mapper.UserMapper;
@@ -26,7 +27,10 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request,
-                        Model model) {
+                        Model model,
+                        @RequestParam(name = "page", defaultValue = "1") Integer page,
+                        @RequestParam(name = "limit", defaultValue = "5") Integer limit
+    ) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0)
             for (Cookie cookie : cookies) {
@@ -40,8 +44,8 @@ public class IndexController {
                 }
             }
 
-        List<QuestionDTO> questionList = questionService.findAllQuestions();
-        model.addAttribute("questionList", questionList);
+        PaginationDTO pagination = questionService.findAllQuestions(page,limit);
+        model.addAttribute("pagination", pagination);
         return "index";
     }
 }
