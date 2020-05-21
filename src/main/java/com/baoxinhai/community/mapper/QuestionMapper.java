@@ -1,6 +1,5 @@
 package com.baoxinhai.community.mapper;
 
-import com.baoxinhai.community.dto.QuestionDTO;
 import com.baoxinhai.community.model.Question;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
