@@ -36,6 +36,9 @@ public class QuestionService {
         if(page>totalPage){
             page=totalPage;
         }
+        if(totalCount==0){
+            page=1;
+        }
         //将page做个转换 转换为数据库查询时候需要的offset
         Integer offset = limit * (page - 1);
         List<Question> allQuestions = questionMapper.findAllQuestions(offset, limit);
@@ -88,5 +91,27 @@ public class QuestionService {
 
         paginationDTO.setPagination(totalCount,page,limit);
         return paginationDTO;
+    }
+
+    public QuestionDTO getQuestionById(Integer id) {
+        Question question = questionMapper.getQuestionById(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        User user = userMapper.findById(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    public void createOrUpdate(Question question) {
+        if(question.getId()==null){
+            //创建
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        }else{
+            //更新
+            question.setGmtModified(System.currentTimeMillis());
+            questionMapper.updateById(question);
+        }
     }
 }

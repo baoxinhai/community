@@ -19,11 +19,13 @@
             <div class="media" th:each="questions:${pagination.questions}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded" th:src="${questions.user.avatarUrl}">
+                        <img class="media-object img-rounded" th:src="${questions.user.getAvatarUrl()}">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${questions.title}"></h4>
+                    <h4 class="media-heading" >
+                        <a th:href="@{'/question/'+${questions.id}}" th:text="${questions.title}"></a>
+                    </h4>
                     <span th:text="${questions.description}"></span><br>
                     <span class="text-desc"> <span th:text="${questions.commentCount}"></span>人回复 • <span
                             th:text="${questions.viewCount}"></span>次浏览• <span
@@ -45,17 +47,10 @@
                     </li>
                     <li th:each="page:${pagination.pages}" th:class="${pagination.currentPage == page}?'active':''">
                         <a th:href="@{/(page=${page})}" th:text="${page}" >
-
+                            <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showNext==true}">
-
-
-
-
-
-
-
                         <a th:href="@{/(page=${pagination.nextPage})}" aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                         </a>
