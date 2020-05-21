@@ -2,6 +2,7 @@ package com.baoxinhai.community.service;
 
 import com.baoxinhai.community.dto.PaginationDTO;
 import com.baoxinhai.community.dto.QuestionDTO;
+import com.baoxinhai.community.exception.CustomizeException;
 import com.baoxinhai.community.mapper.QuestionMapper;
 import com.baoxinhai.community.mapper.UserMapper;
 import com.baoxinhai.community.model.Question;
@@ -95,6 +96,9 @@ public class QuestionService {
 
     public QuestionDTO getQuestionById(Integer id) {
         Question question = questionMapper.getQuestionById(id);
+        if(question==null){
+            throw  new CustomizeException("你找的问题不在了，要不要换一个试试~~~");
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         User user = userMapper.findById(question.getCreator());
@@ -113,5 +117,10 @@ public class QuestionService {
             question.setGmtModified(System.currentTimeMillis());
             questionMapper.updateById(question);
         }
+    }
+
+    public void IncView(Integer id) {
+        Question question = questionMapper.getQuestionById(id);
+        questionMapper.updateViewCountById(question);
     }
 }
