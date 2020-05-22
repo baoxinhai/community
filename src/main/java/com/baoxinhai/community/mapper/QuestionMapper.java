@@ -3,6 +3,7 @@ package com.baoxinhai.community.mapper;
 import com.baoxinhai.community.model.Question;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -34,9 +35,18 @@ public interface QuestionMapper {
     @Select("select * from question where id= #{questionId}")
     Question getQuestionById(@Param(value = "questionId") Integer questionId);
 
+    //更新问题
     @Update("update question set title=#{title},description=#{description},tag=#{tag},gmt_modified=#{gmtModified} where id=#{id}")
     void updateById(Question question);
 
+    //浏览数加一
     @Update("update question set view_count=view_count+1 where id=#{id}")
     void updateViewCountById(Question question);
+
+    @Select("select * from question where id=#{parentId}")
+    Question selectByCommentId(Integer parentId);
+
+    //评论数加一
+    @Update("update question set comment_count=comment_count+1 where id=#{id}")
+    void IncCommentCount(Question question);
 }
