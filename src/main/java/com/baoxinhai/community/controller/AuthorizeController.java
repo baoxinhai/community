@@ -2,7 +2,6 @@ package com.baoxinhai.community.controller;
 
 import com.baoxinhai.community.dto.AccessTokenDTO;
 import com.baoxinhai.community.dto.GithubUser;
-import com.baoxinhai.community.mapper.UserMapper;
 import com.baoxinhai.community.model.User;
 import com.baoxinhai.community.provider.GithubProvider;
 import com.baoxinhai.community.service.UserService;

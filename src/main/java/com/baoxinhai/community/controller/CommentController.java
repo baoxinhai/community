@@ -3,6 +3,7 @@ package com.baoxinhai.community.controller;
 import com.baoxinhai.community.dto.CommentDTO;
 import com.baoxinhai.community.model.Comment;
 import com.baoxinhai.community.model.User;
+import com.baoxinhai.community.responceResult.Result;
 import com.baoxinhai.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class CommentController {
@@ -26,8 +28,8 @@ public class CommentController {
 
         User user = (User) request.getSession().getAttribute("user");
         if(user==null){
-//            return ResultDTO.errorof(2002,"未登录不能进行评论，请先登录");
-            return "redirect:/";
+            Result result = new Result(2001, "回复操作需要登录，请登录后重试~~");
+            return result;
         }
 
         Comment comment = new Comment();
