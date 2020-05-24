@@ -1,7 +1,6 @@
 function post(){
     var questionid= $("#question_id").val();
     var content = $("#comment_content").val();
-    var isin= $("#userInfo").val();
     $.ajax({
         type: 'POST',
         url: '/comment',
