@@ -59,4 +59,19 @@ public class CommentService {
         return commentQueryDTOList;
     }
 
+    public List<CommentQueryDTO> listByCommentId(Integer id) {
+        List<Comment> comments = commentMapper.selectByCommentId(id);
+        if (comments.size() == 0) {
+            return new ArrayList<>();
+        }
+        List<CommentQueryDTO> commentQueryDTOList = new ArrayList<>();
+        for (Comment comment : comments) {
+            User user = userMapper.findById(comment.getCommentator());
+            CommentQueryDTO commentQueryDTO = new CommentQueryDTO();
+            BeanUtils.copyProperties(comment, commentQueryDTO);
+            commentQueryDTO.setUser(user);
+            commentQueryDTOList.add(commentQueryDTO);
+        }
+        return commentQueryDTOList;
+    }
 }
