@@ -124,7 +124,8 @@ function collapseComment(e) {
                         "class":"menu"
                     })).append($("<span/>",{
                         "class":"pull-right",
-                        "html":comment.gmtCreate
+                        "color":"#eee",
+                        "html":moment(comment.gmtCreate).format('YYYY-MM-DD')
                     }));
 
                     var mediaElement=$("<div/>",{

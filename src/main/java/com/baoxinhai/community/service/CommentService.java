@@ -49,6 +49,8 @@ public class CommentService {
             CommentQueryDTO commentQueryDTO = new CommentQueryDTO();
             BeanUtils.copyProperties(comment, commentQueryDTO);
             commentQueryDTO.setUser(user);
+            Integer commentId=commentQueryDTO.getId();
+            commentQueryDTO.setCommentCount(commentMapper.countByType(commentId));
             commentQueryDTOList.add(commentQueryDTO);
         }
 //        }

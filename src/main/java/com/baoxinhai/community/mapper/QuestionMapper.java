@@ -16,7 +16,7 @@ public interface QuestionMapper {
      void create(Question question);
 
     //找到所有的问题，放在首页上
-    @Select("select * from question limit #{offset},#{limit}")
+    @Select("select * from question order by gmt_create desc limit #{offset},#{limit}")
     List<Question> findAllQuestions(@Param(value = "offset") Integer offset,@Param(value = "limit") Integer limit);
 
     //计算共有多少个问题

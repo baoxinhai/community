@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public interface CommentMapper {
 
-    @Insert("insert into comment(parent_id,type,commentator,gmt_create,gmt_modified,content,like_count) values(#{parentId},#{type},#{commentator},#{gmtCreate},#{gmtModified},#{content},#{likeCount})")
+    @Insert("insert into comment(parent_id,type,commentator,gmt_create,gmt_modified,content,like_count,comment_count) values(#{parentId},#{type},#{commentator},#{gmtCreate},#{gmtModified},#{content},#{likeCount},#{commentCount})")
     void insert(Comment comment);
 
     @Select("select * from comment where parent_id=#{id} and type=1 order by gmt_create desc")
@@ -21,4 +21,7 @@ public interface CommentMapper {
 
     @Select("select * from comment where parent_id=#{id} and type=2 order by gmt_create desc")
     List<Comment> selectByCommentId(Integer id);
+
+    @Select("select count(*) from comment where parent_id=#{id} and type=2")
+    Integer countByType(@Param("id") Integer id);
 }
