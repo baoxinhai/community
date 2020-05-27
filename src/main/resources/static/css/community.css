@@ -11,6 +11,17 @@ body{
     float: right;
     margin-bottom: 15px;
 }
+.publish-tag-tab{
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+.publish-tag-tab .label-info{
+    white-space: normal;
+    margin: 5px 5px;
+    display: inline-block;
+}
+
 .media-object{
     width: 38px;
     height: 38px;
@@ -76,4 +87,17 @@ body{
 }
 .question_title{
     margin-top: 25px;
+}
+.question_tag{
+    margin-right: 5px;
+}
+.question_related{
+    line-height: 20px;
+    font-size: 12px;
+    margin-left: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.question_img{
+    width: 100%;
 }

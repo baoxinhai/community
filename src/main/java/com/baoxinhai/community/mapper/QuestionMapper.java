@@ -49,4 +49,8 @@ public interface QuestionMapper {
     //评论数加一
     @Update("update question set comment_count=comment_count+1 where id=#{id}")
     void IncCommentCount(Question question);
+
+    @Select("select * from question where tag REGEXP #{tag} and id !=#{id}")
+    List<Question> selectRelated(Question question);
+
 }

@@ -1,9 +1,11 @@
 package com.baoxinhai.community.controller;
 
+import com.baoxinhai.community.cache.TagCache;
 import com.baoxinhai.community.dto.QuestionDTO;
 import com.baoxinhai.community.model.Question;
 import com.baoxinhai.community.model.User;
 import com.baoxinhai.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +31,13 @@ public class PublishController {
         model.addAttribute("description",questionById.getDescription());
         model.addAttribute("tag",questionById.getTag());
         model.addAttribute("id",questionById.getId());
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
     @GetMapping("/publish")
-    public String publish() {
+    public String publish(Model model) {
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -63,6 +67,11 @@ public class PublishController {
             return "publish";
         }
 
+        String invalid = TagCache.filterInvalid(tag);
+        if(StringUtils.isNotBlank(invalid)){
+            model.addAttribute("error", "输入非法标签"+invalid);
+            return "publish";
+        }
         User user=(User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "用户未登录!请先登录，再发布问题");

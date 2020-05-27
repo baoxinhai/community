@@ -2,6 +2,7 @@ package com.baoxinhai.community.controller;
 
 import com.baoxinhai.community.dto.CommentQueryDTO;
 import com.baoxinhai.community.dto.QuestionDTO;
+import com.baoxinhai.community.model.Question;
 import com.baoxinhai.community.service.CommentService;
 import com.baoxinhai.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,14 @@ public class QuestionController {
     public String question(@PathVariable(value = "id") Integer id,
                            Model model){
         QuestionDTO questionDTO=questionService.getQuestionById(id);
+        List<Question> relatedQuestion=questionService.selectRelated(questionDTO);
         List<CommentQueryDTO> commentsDTO=commentService.listByQuestionId(id);
 
         //累加阅读数
         questionService.IncView(id);
         model.addAttribute("question",questionDTO);
         model.addAttribute("commentsDTO",commentsDTO);
+        model.addAttribute("relatedQuestion",relatedQuestion);
         return "question";
     }
 

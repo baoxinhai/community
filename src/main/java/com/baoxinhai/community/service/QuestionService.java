@@ -7,6 +7,7 @@ import com.baoxinhai.community.mapper.QuestionMapper;
 import com.baoxinhai.community.mapper.UserMapper;
 import com.baoxinhai.community.model.Question;
 import com.baoxinhai.community.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -122,5 +123,18 @@ public class QuestionService {
     public void IncView(Integer id) {
         Question question = questionMapper.getQuestionById(id);
         questionMapper.updateViewCountById(question);
+    }
+
+    public List<Question> selectRelated(QuestionDTO questionDTO) {
+        if(StringUtils.isBlank(questionDTO.getTag())){
+            return new ArrayList<>();
+        }
+        String replaceTag = questionDTO.getTag().replace('，', ',').replace(',', '|');
+        Question question=new Question();
+        question.setId(questionDTO.getId());
+        question.setTag(replaceTag);
+        List<Question> questions=questionMapper.selectRelated(question);
+
+        return questions;
     }
 }
